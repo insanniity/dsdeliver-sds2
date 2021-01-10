@@ -8,7 +8,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 export default function Header() {
     const navigation = useNavigation();
     const handleOnPress = () => {
-        navigation.navigate('Orders');
+        navigation.navigate('Home');
     }
     let [fontsLoaded] = useFonts({
         OpenSans_400Regular,
