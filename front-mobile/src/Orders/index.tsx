@@ -38,8 +38,7 @@ export default function Orders() {
     
     return (
         <>
-          <Header />
-         
+          <Header />         
           <ScrollView style={styles.container}>
           {isLoading ? (
               <Text style={styles.textLoading}>Buscando pedidos...</Text>

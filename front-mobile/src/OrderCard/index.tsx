@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
       lineHeight: 25,
       textAlign: 'right',
       letterSpacing: -0.24,
-      color: '#DA5C5C',
+      color: '#5ca8da',
       fontFamily: 'OpenSans_700Bold'
     },
     productsList: {

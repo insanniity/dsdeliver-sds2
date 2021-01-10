@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Alert, StyleSheet, Text, View , } from 'react-native';
+import { Alert, Linking, StyleSheet, Text, View , } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { confirmDelivery } from '../api';
 import Header from '../Header';
@@ -21,7 +21,14 @@ export default function OrderDetails({route}:Props) {
     const navigation = useNavigation();
 
     const handleOnCancel = () => {
-        
+        cancelDelivery(order.id)
+            .then(()=> {
+            Alert.alert(`Pedido ${order.id} confirmado com sucesso!`);            
+            navigation.navigate('Orders');
+            })
+            .catch(() => {
+                Alert.alert(`Houve um erro ao confirmar o pedido ${order.id}`);
+            });
     }
 
     const handleOnConfirmDelivery = () => {
@@ -35,7 +42,9 @@ export default function OrderDetails({route}:Props) {
             });
     }
 
-
+    const handleStartNavigation = () =>{
+        Linking.openURL(`https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=${order.latitude},${order.longitude}`);
+    }
 
    
     return (
@@ -43,8 +52,8 @@ export default function OrderDetails({route}:Props) {
             <Header />
             <View style={styles.container}>
                 <OrderCard order={order} /> 
-                <RectButton style={styles.button}><Text style={styles.buttonText}>Iniciar Navegação</Text></RectButton> 
-                <RectButton style={styles.button}><Text style={styles.buttonText} onPress={handleOnConfirmDelivery}>Confirmar entrega</Text></RectButton>  
+                <RectButton style={styles.button} onPress={handleStartNavigation}><Text style={styles.buttonText} >Iniciar Navegação</Text></RectButton> 
+                <RectButton style={styles.button} onPress={handleOnConfirmDelivery}><Text style={styles.buttonText}>Confirmar entrega</Text></RectButton>  
                 <RectButton style={styles.button} onPress={handleOnCancel}><Text style={styles.buttonText}>Cancelar</Text></RectButton>        
             </View>
         </>
@@ -57,7 +66,7 @@ const styles = StyleSheet.create({
       paddingLeft: '5%'
     },
     button: {
-      backgroundColor: '#DA5C5C',
+      backgroundColor: '#5ca8da',
       flexDirection: 'row',
       borderRadius: 10,
       marginTop: 40,
